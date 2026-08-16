@@ -74,40 +74,39 @@ createGrids();
 window.addEventListener("keydown", handleKeyEntry);
 
 function handleKeyEntry(e) {
-  e.preventDefault();
   if (e.key === "Enter") {
     handleSubmit();
     return;
   }
 
   if (e.key === "Backspace") {
-    for (let i = Array.from(wordDisplay.children).length - 1; i >= 0; i--) {
-      const wordSquare = wordDisplay.children[i];
-      if (wordSquare.innerText) {
-        wordSquare.innerText = "";
-        break;
-      }
-    }
+    handleBackspace()
     return;
   }
 
   if (wordLengthInput.style.display !== "none") {
     if (e.key === "ArrowDown") {
+        e.preventDefault();
       totalTriesInput.stepUp();
       totalTriesInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowUp") {
+        e.preventDefault();
       totalTriesInput.stepDown();
       totalTriesInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowLeft") {
+        e.preventDefault();
+
       wordLengthInput.stepDown();
       wordLengthInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowRight") {
+        e.preventDefault();
+
       wordLengthInput.stepUp();
       wordLengthInput.dispatchEvent(new Event("change"));
       return;
@@ -239,11 +238,24 @@ function clearWordDisplay() {
   }
 }
 
+function handleBackspace(){
+      for (let i = Array.from(wordDisplay.children).length - 1; i >= 0; i--) {
+      const wordSquare = wordDisplay.children[i];
+      if (wordSquare.innerText) {
+        wordSquare.innerText = "";
+        break;
+      }
+    }
+}
+
 keyboard.addEventListener("click", handleKeyboardClick);
 function handleKeyboardClick(e) {
   if (e.target.id === "alphabet") {
     return;
-  } else if (
+  } else if(e.target.innerText ==="Backspace") {
+    handleBackspace()
+    return;
+  }else if (
     allowedCharacters.test(e.target.innerText) &&
     !disallowedKeys.includes(e.target.innerText)
   ) {
