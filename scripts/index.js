@@ -80,32 +80,32 @@ function handleKeyEntry(e) {
   }
 
   if (e.key === "Backspace") {
-    handleBackspace()
+    handleBackspace();
     return;
   }
 
   if (wordLengthInput.style.display !== "none") {
     if (e.key === "ArrowDown") {
-        e.preventDefault();
+      e.preventDefault();
       totalTriesInput.stepUp();
       totalTriesInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowUp") {
-        e.preventDefault();
+      e.preventDefault();
       totalTriesInput.stepDown();
       totalTriesInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowLeft") {
-        e.preventDefault();
+      e.preventDefault();
 
       wordLengthInput.stepDown();
       wordLengthInput.dispatchEvent(new Event("change"));
       return;
     }
     if (e.key === "ArrowRight") {
-        e.preventDefault();
+      e.preventDefault();
 
       wordLengthInput.stepUp();
       wordLengthInput.dispatchEvent(new Event("change"));
@@ -203,31 +203,51 @@ function handleSubmit() {
 
 function checkLettersAndColorGrid(letter, index, allPlayedLetters) {
   const keyboardRows = keyboard.children;
-  for (let row of keyboardRows) {
-    for (let square of row.children) {
-      if (square.innerText === letter) {
-        square.style.backgroundColor = "gray";
+
+  function colorKeyboardSquares(color) {
+    for (let row of keyboardRows) {
+      for (let square of row.children) {
+        if (square.innerText === letter) {
+          console.log(color)
+          if (!square.style.backgroundColor){
+            square.style.backgroundColor = color
+            return;
+          }
+          if (square.style.backgroundColor !== "green") {
+            square.style.backgroundColor = color;
+            return
+          // // } else if (square.style.backgroundColor === "yellow" ) {
+          // //   square.style.backgroundColor = color;
+          // //   return
+          // } else {
+          //   square.style.backgroundColor = "grey"
+          }
+        }
       }
     }
   }
+
   const gameBoardSquare = gameBoard.children[activeRow * wordLength + index];
   if (word[index] === letter && allPlayedLetters.includes(letter)) {
     gameBoardSquare.style.backgroundColor = "green";
     gameBoardSquare.innerText = letter;
+    colorKeyboardSquares("green");
     allPlayedLetters.splice(allPlayedLetters.indexOf(letter), 1);
   } else if (word.includes(letter) && allPlayedLetters.includes(letter)) {
     gameBoardSquare.style.backgroundColor = "yellow";
     gameBoardSquare.innerText = letter;
+    colorKeyboardSquares("yellow");
     allPlayedLetters.splice(allPlayedLetters.indexOf(letter), 1);
   } else {
     gameBoardSquare.style.backgroundColor = "grey";
     gameBoardSquare.innerText = letter;
+    colorKeyboardSquares("grey");
   }
 }
 
 function handleGameOver() {
-  enterStarterWordMessage.innerText = "Game Over";
-  enterStarterWordMessage.style.visibility = "visible"
+  enterStarterWordMessage.innerText = `Game Over\n${word}`;
+  enterStarterWordMessage.style.visibility = "visible";
   submitBtn.removeEventListener("click", handleSubmit);
   window.removeEventListener("keydown", handleKeyEntry);
 }
@@ -238,24 +258,24 @@ function clearWordDisplay() {
   }
 }
 
-function handleBackspace(){
-      for (let i = Array.from(wordDisplay.children).length - 1; i >= 0; i--) {
-      const wordSquare = wordDisplay.children[i];
-      if (wordSquare.innerText) {
-        wordSquare.innerText = "";
-        break;
-      }
+function handleBackspace() {
+  for (let i = Array.from(wordDisplay.children).length - 1; i >= 0; i--) {
+    const wordSquare = wordDisplay.children[i];
+    if (wordSquare.innerText) {
+      wordSquare.innerText = "";
+      break;
     }
+  }
 }
 
 keyboard.addEventListener("click", handleKeyboardClick);
 function handleKeyboardClick(e) {
   if (e.target.id === "alphabet") {
     return;
-  } else if(e.target.innerText ==="Backspace") {
-    handleBackspace()
+  } else if (e.target.innerText === "Backspace") {
+    handleBackspace();
     return;
-  }else if (
+  } else if (
     allowedCharacters.test(e.target.innerText) &&
     !disallowedKeys.includes(e.target.innerText)
   ) {

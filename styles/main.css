@@ -1,4 +1,5 @@
 body {
+  margin-top: 15vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,7 +8,6 @@ body {
 }
 
 #wordLength, #totalTries{
-  /* display: block; */
   width: 2em;
 }
 
@@ -30,6 +30,9 @@ body {
 
 #enterStarterWordMessage{
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
   color: white;
   text-shadow: 1px 0 1px black;
   height: 1em;
@@ -38,8 +41,6 @@ body {
 
 #wordDisplay {
   display: flex;
-  /* margin-top: 2em; */
-  /* width: 1em; */
 }
 
 #wordDisplay > div {
@@ -94,4 +95,3 @@ button{
 #submitBtn{
   margin-top: 1em;
 }
-
