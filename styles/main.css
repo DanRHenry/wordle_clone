@@ -1,0 +1,81 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: brown;
+}
+
+#wordLength, #totalTries{
+  /* display: block; */
+  width: 2em;
+}
+
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  width: fit-content;
+  background-color: white;
+}
+
+#gameBoard > div {
+  width: 2em;
+  aspect-ratio: 1/1;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#enterStarterWordMessage{
+  display: flex;
+  color: white;
+  text-shadow: 1px 0 1px black;
+  height: 1em;
+  margin: 1em 0 1em 0;
+}
+
+#wordDisplay {
+  display: flex;
+  /* margin-top: 2em; */
+  /* width: 1em; */
+}
+
+#wordDisplay > div {
+  width: 1em;
+  height: 1em;
+  border: 1px solid red;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#alphabet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#alphabet > div {
+  display: flex;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+#alphabet > div > div {
+  border: 1px solid black;
+  width: 1em;
+  cursor: pointer;
+}
+
+button{
+  cursor: pointer;
+}
+
+#alphabet > div > div:hover{
+  background-color: rgb(172, 171, 171);
+}
