@@ -1,8 +1,6 @@
 //todo:
 /* 
 Check words against a dictionary (or allow an option to do so)
-Stop letters from being counted if there aren't more than one in the word to guess
-Check for end game and display message
 */
 
 const gameBoard = document.querySelector("#gameBoard");
