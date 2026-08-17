@@ -9,6 +9,8 @@
   <body>
     <div id="gameBoard"></div>
     <div id="enterStarterWordMessage">Enter Gameplay Word</div>
+    <label for="toggleAlphabet">Switch Keyboard Layout</label>
+    <input type="checkbox" id="toggleAlphabet">
     <label for="wordLengthInput">Length</label>
     <input type="number" value="5" max="9" min="1" id="wordLengthInput">
     <label for="totalTriesInput">Tries</label>
@@ -17,37 +19,10 @@
     </div>
     <div id="alphabet">
       <div id="topRow">
-        <div>q</div>
-        <div>w</div>
-        <div>e</div>
-        <div>r</div>
-        <div>t</div>
-        <div>y</div>
-        <div>u</div>
-        <div>i</div>
-        <div>o</div>
-        <div>p</div>
       </div>
       <div id="middleRow">
-        <div>a</div>
-        <div>s</div>
-        <div>d</div>
-        <div>f</div>
-        <div>g</div>
-        <div>h</div>
-        <div>j</div>
-        <div>k</div>
-        <div>l</div>
       </div>
       <div id="bottomRow">
-        <div>z</div>
-        <div>x</div>
-        <div>c</div>
-        <div>v</div>
-        <div>b</div>
-        <div>n</div>
-        <div>m</div>
-        <div id="backspace">Backspace</div>
       </div>
     </div>
         <button id="submitBtn">Submit</button>

@@ -7,6 +7,9 @@ const gameBoard = document.querySelector("#gameBoard");
 const wordLengthInput = document.getElementById("wordLengthInput");
 const totalTriesInput = document.getElementById("totalTriesInput");
 const submitBtn = document.getElementById("submitBtn");
+const toggleAlphabetInput = document.getElementById("toggleAlphabet")
+
+toggleAlphabetInput.addEventListener("change", toggleKeyboardLayout)
 
 const enterStarterWordMessage = document.getElementById(
   "enterStarterWordMessage",
@@ -208,19 +211,25 @@ function checkLettersAndColorGrid(letter, index, allPlayedLetters) {
     for (let row of keyboardRows) {
       for (let square of row.children) {
         if (square.innerText === letter) {
-          console.log(color)
-          if (!square.style.backgroundColor){
-            square.style.backgroundColor = color
+          if (!square.style.backgroundColor) {
+            square.style.backgroundColor = color;
             return;
           }
-          if (square.style.backgroundColor !== "green") {
-            square.style.backgroundColor = color;
-            return
-          // // } else if (square.style.backgroundColor === "yellow" ) {
-          // //   square.style.backgroundColor = color;
-          // //   return
-          // } else {
-          //   square.style.backgroundColor = "grey"
+          if (color === "green") {
+            if (
+              square.style.backgroundColor === "yellow" ||
+              square.style.backgroundColor === "grey"
+            ) {
+              square.style.backgroundColor = color;
+            }
+            return;
+          } else if (color === "yellow") {
+            if (square.style.backgroundColor !== "green") {
+              square.style.backgroundColor = color;
+              return;
+            } else if (color === "grey" && !square.style.backgroundColor) {
+              square.style.backgroundColor = "grey";
+            }
           }
         }
       }
@@ -268,6 +277,17 @@ function handleBackspace() {
   }
 }
 
+function toggleKeyboardLayout() {
+  buildKeyboard(toggleAlphabetInput.checked)
+}
+
+const keyboardLayouts = {
+  qwerty: Array.from("qwertyuiopasdfghjklzxcvbnm"),
+  abcde: Array.from("abcdefghijklmnopqrstuvwxyz")
+}
+
+buildKeyboard(false)
+
 keyboard.addEventListener("click", handleKeyboardClick);
 function handleKeyboardClick(e) {
   if (e.target.id === "alphabet") {
@@ -289,4 +309,38 @@ function handleKeyboardClick(e) {
       }
     }
   }
+}
+
+function buildKeyboard(value) {
+  document.getElementById("topRow").replaceChildren()
+  document.getElementById("middleRow").replaceChildren()
+  document.getElementById("bottomRow").replaceChildren()
+
+  let keyboard;
+
+  if (value === false) {
+    keyboard = "qwerty"
+  } else {
+    keyboard = "abcde"
+  }
+
+  for (let i = 0; i < keyboardLayouts[keyboard].length; i++){
+    const letter = document.createElement('div')
+    letter.innerText = keyboardLayouts[keyboard][i]
+    if (i < 10) {
+      document.getElementById("topRow").append(letter)
+      continue
+    } 
+    if (i <= 18 && i > 9){
+      document.getElementById("middleRow").append(letter)
+      continue
+    }
+    if (i >= 19) {
+      document.getElementById("bottomRow").append(letter)
+    }
+  }
+      const backspaceKey = document.createElement("div")
+    backspaceKey.id = "backspace"
+    backspaceKey.innerText = "Backspace"
+    document.getElementById("bottomRow").append(backspaceKey)
 }
