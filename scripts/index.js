@@ -7,9 +7,9 @@ const gameBoard = document.querySelector("#gameBoard");
 const wordLengthInput = document.getElementById("wordLengthInput");
 const totalTriesInput = document.getElementById("totalTriesInput");
 const submitBtn = document.getElementById("submitBtn");
-const toggleAlphabetInput = document.getElementById("toggleAlphabet")
+const toggleAlphabetInput = document.getElementById("toggleAlphabet");
 
-toggleAlphabetInput.addEventListener("change", toggleKeyboardLayout)
+toggleAlphabetInput.addEventListener("change", toggleKeyboardLayout);
 
 const enterStarterWordMessage = document.getElementById(
   "enterStarterWordMessage",
@@ -278,15 +278,21 @@ function handleBackspace() {
 }
 
 function toggleKeyboardLayout() {
-  buildKeyboard(toggleAlphabetInput.checked)
+  buildKeyboard(toggleAlphabetInput.checked);
 }
 
 const keyboardLayouts = {
-  qwerty: Array.from("qwertyuiopasdfghjklzxcvbnm"),
-  abcde: Array.from("abcdefghijklmnopqrstuvwxyz")
-}
+  qwerty: {
+    layout: Array.from("qwertyuiopasdfghjklzxcvbnm"),
+    attributes: { },
+  },
+  abcde: {
+    layout: Array.from("abcdefghijklmnopqrstuvwxyz"),
+    attributes: { },
+  },
+};
 
-buildKeyboard(false)
+buildKeyboard(false);
 
 keyboard.addEventListener("click", handleKeyboardClick);
 function handleKeyboardClick(e) {
@@ -312,35 +318,79 @@ function handleKeyboardClick(e) {
 }
 
 function buildKeyboard(value) {
-  document.getElementById("topRow").replaceChildren()
-  document.getElementById("middleRow").replaceChildren()
-  document.getElementById("bottomRow").replaceChildren()
+  let topRow = document.getElementById("topRow");
+  let middleRow = document.getElementById("middleRow");
+  let bottomRow = document.getElementById("bottomRow");
 
-  let keyboard;
+  let keyboardLayout;
+
+  if (value === true) {
+    keyboardLayout = "abcde";
+  } else {
+    keyboardLayout = "qwerty";
+  }
+
+  let attributes = keyboardLayouts[keyboardLayout].attributes;
+
+
+  for (let i = 0; i < topRow.children.length; i++) {
+    if (topRow.children[i].getAttribute("style") !== null) {
+      const letterName = topRow.children[i].innerText
+      attributes[letterName] = topRow.children[i].getAttribute("style");
+    } 
+  }
+
+  for (let i = 0; i < middleRow.children.length; i++) {
+    if (middleRow.children[i].getAttribute("style") !== null) {
+      const letterName = middleRow.children[i].innerText
+      attributes[letterName] = middleRow.children[i].getAttribute("style");
+    } 
+  }
+
+  for (let i = 0; i < bottomRow.children.length; i++) {
+        if (bottomRow.children[i].getAttribute("style") !== null) {
+          const letterName = bottomRow.children[i].innerText
+          attributes[letterName] = bottomRow.children[i].getAttribute("style");
+    } 
+  }
+
+      topRow.replaceChildren()
+    middleRow.replaceChildren()
+    bottomRow.replaceChildren();
+
+        for (let i = 0; i < keyboardLayouts[keyboardLayout].layout.length; i++) {
+      const letter = document.createElement("div");
+      letter.innerText = keyboardLayouts[keyboardLayout].layout[i];
+      if (i < 10) {
+        document.getElementById("topRow").append(letter);
+        continue;
+      }
+      if (i <= 18 && i > 9) {
+        document.getElementById("middleRow").append(letter);
+        continue;
+      }
+      if (i >= 19) {
+        document.getElementById("bottomRow").append(letter);
+      }
+    }
+    const backspaceKey = document.createElement("div");
+    backspaceKey.id = "backspace";
+    backspaceKey.innerText = "Backspace";
+    document.getElementById("bottomRow").append(backspaceKey);
 
   if (value === false) {
-    keyboard = "qwerty"
+    keyboardLayout = "qwerty";
   } else {
-    keyboard = "abcde"
+    keyboardLayout = "abcde";
   }
+  attributes = keyboardLayouts[keyboardLayout].attributes;
 
-  for (let i = 0; i < keyboardLayouts[keyboard].length; i++){
-    const letter = document.createElement('div')
-    letter.innerText = keyboardLayouts[keyboard][i]
-    if (i < 10) {
-      document.getElementById("topRow").append(letter)
-      continue
-    } 
-    if (i <= 18 && i > 9){
-      document.getElementById("middleRow").append(letter)
-      continue
-    }
-    if (i >= 19) {
-      document.getElementById("bottomRow").append(letter)
+  for (let row of keyboard.children) {
+    for (let key of row.children) {
+      const letter = key.innerText
+      if (attributes[letter]){
+        key.setAttribute("style", attributes[letter])
+      }
     }
   }
-      const backspaceKey = document.createElement("div")
-    backspaceKey.id = "backspace"
-    backspaceKey.innerText = "Backspace"
-    document.getElementById("bottomRow").append(backspaceKey)
 }
