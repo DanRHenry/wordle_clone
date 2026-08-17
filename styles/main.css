@@ -53,34 +53,34 @@ body {
   justify-content: center;
 }
 
-#alphabet {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 #alphabet > div {
   display: flex;
-  background-color: white;
-  display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   text-align: center;
+  width: 100vw;
 }
 
 #alphabet > div > div {
   border: 1px solid black;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 2.5em;
-  height: 2.5em;
+  width: 3em;
+  height: 3em;
+  @media (orientation: portrait) {
+    width: 9vw;
+    height: 9vw;
+  }
   cursor: pointer;
+  background-color: white;
 }
 
 #backspace{
-  min-width: fit-content;
-  padding: 0 3px 0 3px;
+  width: unset!important;
+  /* padding: 0 3px 0 3px; */
+    padding: 0 6px 0 3px!important;
 }
 
 button{
